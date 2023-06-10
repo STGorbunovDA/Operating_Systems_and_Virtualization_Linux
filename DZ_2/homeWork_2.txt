@@ -1,0 +1,73 @@
+1. Создать каталоги students и mentors в домашней директории, а в них — текстовые файлы students_list.txt и mentors_list.txt соответственно.
+2. Открыть созданные в п.1 файлы в любом текстовом редакторе и заполнить их (в соответствии с названием) списком Ваших одногруппников и наставников на данном потоке.
+3. Переместите файл mentors_list.txt в папку students.
+4. Удалите папку mentors.
+5. Переименуйте папку students в students_and_mentors.
+6. Удалите папку students_and_mentors вместе с содержимым.
+7 *. Создать файл file1 и наполнить его произвольным содержимым. Скопировать его в file2. Создать символическую ссылку file3 на file1. Создать жёсткую ссылку file4 на file1. Посмотреть, какие inode у файлов. Удалить file1. Что стало с остальными созданными файлами? Попробовать вывести их на экран.
+8 *. Дать созданным файлам другие, произвольные имена. Создать новую символическую ссылку. Переместить ссылки в другую директорию.
+
+Результат:
+Текст команд, которые применялись при выполнении задания. Присылаем в формате текста выполненных команд и результатов их выполнения из терминала (простые файлы *.txt, созданные в блокноте). Без скриншотов.
+
+db@db-VirtualBox:~$ mkdir students
+db@db-VirtualBox:~$ mkdir mentors
+db@db-VirtualBox:~$ cd ~/students
+db@db-VirtualBox:~/students$ ll
+total 8
+drwxrwxr-x  2 db db 4096 мая 28 18:04 ./
+drwxr-x--- 19 db db 4096 мая 28 18:04 ../
+db@db-VirtualBox:~/students$ cat > students_list.txt
+Преподаватель: Кирилл Иванов
+db@db-VirtualBox:~/students$ cd ~/mentors
+db@db-VirtualBox:~/mentors$ cat > mentors_list.txt
+Преподаватель: Кирилл Иванов
+db@db-VirtualBox:~/mentors$ cd
+db@db-VirtualBox:~$ cd ~/mentors
+db@db-VirtualBox:~/mentors$ mv mentors_list.txt students/
+mv: cannot move 'mentors_list.txt' to 'students/': Not a directory
+db@db-VirtualBox:~/mentors$ mentors_list.txt ~/students
+mentors_list.txt: command not found
+db@db-VirtualBox:~/mentors$ mv mentors_list.txt /home/db/students
+db@db-VirtualBox:~/mentors$ cd
+db@db-VirtualBox:~$ ll
+total 124
+drwxr-x--- 19 db   db     4096 мая 28 18:04 ./
+drwxr-xr-x  3 root root   4096 мая 28 15:34 ../
+drwxrwxr-x  3 db   db     4096 мая 28 17:57 1/
+-rw-------  1 db   db      399 мая 28 18:00 .bash_history
+-rw-r--r--  1 db   db      220 мая 28 15:34 .bash_logout
+-rw-r--r--  1 db   db     3771 мая 28 15:34 .bashrc
+drwx------ 11 db   db     4096 мая 28 16:16 .cache/
+drwx------ 12 db   db     4096 мая 28 16:11 .config/
+drwxr-xr-x  2 db   db     4096 мая 28 15:48 Desktop/
+drwxr-xr-x  2 db   db     4096 мая 28 15:48 Documents/
+drwxr-xr-x  2 db   db     4096 мая 28 15:48 Downloads/
+drwx------  3 db   db     4096 мая 28 15:48 .local/
+drwxrwxr-x  2 db   db     4096 мая 28 18:21 mentors/
+drwxr-xr-x  2 db   db     4096 мая 28 15:48 Music/
+drwxr-xr-x  2 db   db     4096 мая 28 15:48 Pictures/
+-rw-r--r--  1 db   db      807 мая 28 15:34 .profile
+drwxr-xr-x  2 db   db     4096 мая 28 15:48 Public/
+drwxrwx---  1 root vboxsf    0 мая 28 16:31 shared/
+drwx------  3 db   db     4096 мая 28 15:48 snap/
+drwxrwxr-x  2 db   db     4096 мая 28 18:21 students/
+-rw-r--r--  1 db   db        0 мая 28 15:49 .sudo_as_admin_successful
+drwxr-xr-x  2 db   db     4096 мая 28 15:48 Templates/
+drwxrwxr-x  4 db   db     4096 мая 28 18:03 test/
+-rw-r-----  1 db   db        5 мая 28 16:31 .vboxclient-clipboard-tty2-control.pid
+-rw-r-----  1 db   db        5 мая 28 16:31 .vboxclient-clipboard-tty2-service.pid
+-rw-r-----  1 db   db        5 мая 28 16:31 .vboxclient-draganddrop-tty2-control.pid
+-rw-r-----  1 db   db        5 мая 28 16:31 .vboxclient-draganddrop-tty2-service.pid
+-rw-r-----  1 db   db        5 мая 28 16:31 .vboxclient-hostversion-tty2-control.pid
+-rw-r-----  1 db   db        5 мая 28 16:31 .vboxclient-seamless-tty2-control.pid
+-rw-r-----  1 db   db        5 мая 28 16:31 .vboxclient-seamless-tty2-service.pid
+-rw-r-----  1 db   db        5 мая 28 16:31 .vboxclient-vmsvga-session-tty2-control.pid
+-rw-r-----  1 db   db        5 мая 28 16:31 .vboxclient-vmsvga-session-tty2-service.pid
+drwxr-xr-x  2 db   db     4096 мая 28 15:48 Videos/
+db@db-VirtualBox:~$ rmdir mentors
+db@db-VirtualBox:~$ mv students students_and_mentors
+db@db-VirtualBox:~$ rmdir -r students_and_mentors
+rmdir: invalid option -- 'r'
+Try 'rmdir --help' for more information.
+db@db-VirtualBox:~$ rm -R students_and_mentors

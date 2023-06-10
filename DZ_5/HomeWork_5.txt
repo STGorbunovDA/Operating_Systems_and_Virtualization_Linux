@@ -1,0 +1,106 @@
+1. Подключить репозиторий с nginx любым удобным способом, установить nginx и потом удалить nginx, используя утилиту dpkg.
+2. Установить пакет на свой выбор, используя snap.
+3. * Создать с помощью nano файл test.txt. Настроить автоматический бэкап этого файла раз в 10 минут в файл с названием test.txt.bak с использованием cron.
+Решение присылаем в виде текста использованных команд (можно без результатов вывода). Без скриншотов!
+Задачи со звездочкой (*) необязательные, дополнительные.
+
+--apt--
+
+root@db-VirtualBox:/home/db# apt search nginx
+root@db-VirtualBox:/home/db# apt list nginx
+root@db-VirtualBox:/home/db# apt install -y nginx
+root@db-VirtualBox:/home/db# cd /etc/nginx
+root@db-VirtualBox:/etc/nginx# ll
+
+oot@db-VirtualBox:/etc/nginx# apt remove nginx
+root@db-VirtualBox:/etc/nginx# apt autoremove
+
+root@db-VirtualBox:/etc/nginx# apt install nginx
+root@db-VirtualBox:/etc# apt purge nginx
+
+root@db-VirtualBox:/etc# cd nginx
+root@db-VirtualBox:/etc/nginx# ll
+
+root@db-VirtualBox:/etc/nginx# apt purge 
+libnginx-mod-http-geoip2 
+libnginx-mod-http-image-filter 
+libnginx-mod-http-xslt-filter 
+libnginx-mod-mail 
+libnginx-mod-stream 
+libnginx-mod-stream-geoip2 
+nginx-common nginx-core
+
+root@db-VirtualBox:/etc# apt list mc
+
+
+--dpkg--
+
+db@db-VirtualBox:~$ lsb_release -a
+No LSB modules are available.
+Distributor ID:	Ubuntu
+Description:	Ubuntu 22.04.2 LTS
+Release:	22.04
+Codename:	jammy
+
+db@db-VirtualBox:~$ sudo su
+[sudo] password for db: 
+root@db-VirtualBox:/home/db# wget https://download.virtualbox.org/virtualbox/7.0.8/virtualbox-7.0_7.0.8-156879~Ubuntu~jammy_amd64.deb
+root@db-VirtualBox:/home/db# dpkg -i virtualbox-7.0_7.0.8-156879~Ubuntu~jammy_amd64.deb
+root@db-VirtualBox:/home/db# apt -f install
+
+root@db-VirtualBox:/home/db# cd /etc/apt
+root@db-VirtualBox:/etc/apt# ll
+root@db-VirtualBox:/etc/apt# cd sources.list.d/
+root@db-VirtualBox:/etc/apt/sources.list.d# ll
+root@db-VirtualBox:/etc/apt/sources.list.d# cat > vb.list
+
+root@db-VirtualBox:/etc/apt/sources.list.d# cat > vb.list
+deb [arch=amd64 signed-by=/usr/share/keyrings/oracle-virtualbox-2016.gpg] https://download.virtualbox.org/virtualbox/debian <mydist> contrib
+root@db-VirtualBox:/etc/apt/sources.list.d# nano vb.list
+root@db-VirtualBox:/etc/apt/sources.list.d# apt update
+root@db-VirtualBox:/etc/apt/sources.list.d# wget -O- https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo gpg --dearmor --yes --output /usr/share/keyrings/oracle-virtualbox-2016.gpg
+root@db-VirtualBox:/etc/apt/sources.list.d# apt update
+
+
+--Assignment1--
+root@db-VirtualBox:/etc/apt/sources.list.d# echo "deb http://nginx.org/packages/ubuntu focal nginx" > nginx.list
+root@db-VirtualBox:/etc/apt/sources.list.d# curl -fsSL https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
+OK
+root@db-VirtualBox:/etc/apt/sources.list.d# sudo apt update
+root@db-VirtualBox:/etc/apt/sources.list.d# sudo apt install nginx -y
+
+--Assignment2--
+oot@db-VirtualBox:/etc/apt/sources.list.d# sudo snap install robomongo
+robomongo 0.9.0-rc9 from Francesco Banconi (frankban) installed
+
+--Assignment3--
+db@db-VirtualBox:~$ nano text.txt
+db@db-VirtualBox:~$ crontab -e
+db@db-VirtualBox:~$ crontab -l
+
+ */10 * * * * cat /home/db/test.txt > /home/db/test.txt.bak
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
