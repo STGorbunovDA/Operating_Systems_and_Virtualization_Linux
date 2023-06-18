@@ -1,0 +1,96 @@
+HomeWork_7. Запуск стека для веб-приложения
+
+Задание:
+1. Установить Nginx
+2. * настроить Nginx на работу с PHP-FPM.
+3. Установить Apache.
+4. * Настроить обработку PHP. Добиться одновременной работы с Nginx.
+5. Настроить схему обратного прокси для Nginx (динамика - на Apache).
+6. Установить MySQL. Создать новую базу данных и таблицу в ней.
+7. * Установить пакет phpmyadmin и запустить его веб-интерфейс для управления MySQL.
+
+
+1. Установить Nginx
+db@db-VirtualBox:~$ sudo apt install nginx -y
+
+
+2. * настроить Nginx на работу с PHP-FPM.
+db@db-VirtualBox:/var/www/html$ sudo apt install php-fpm
+db@db-VirtualBox:/var/www/html$ cd /etc/php/8.1
+db@db-VirtualBox:/etc/php/8.1$ ll
+db@db-VirtualBox:/etc/php/8.1$ cd fpm/pool.d/
+db@db-VirtualBox:/etc/php/8.1/fpm/pool.d$ ll
+db@db-VirtualBox:/etc/php/8.1/fpm/pool.d$ nano www.conf
+db@db-VirtualBox:/etc/php/8.1/fpm/pool.d$ cd /etc/nginx
+db@db-VirtualBox:/etc/nginx$ sudo nano sites-enabled/default
+db@db-VirtualBox:/etc/nginx$ sudo systemctl reload nginx
+
+
+3. Установить Apache.
+db@db-VirtualBox:~$ sudo apt install apache2 -y
+
+
+4. * Настроить обработку PHP. Добиться одновременной работы с Nginx.
+db@db-VirtualBox:~$ cd /var/www/html
+db@db-VirtualBox:/var/www/html$ ll
+db@db-VirtualBox:/var/www/html$ sudo su
+db@db-VirtualBox:/var/www/html# nano info.php
+db@db-VirtualBox:/var/www/html# cat info.php
+<?php
+        phpinfo();
+?>
+root@db-VirtualBox:/var/www/html# exit
+
+
+5. Настроить схему обратного прокси для Nginx (динамика - на Apache).
+db@db-VirtualBox:~$ cd /etc/apache2/
+db@db-VirtualBox:/etc/apache2$ sudo nano ports.conf
+db@db-VirtualBox:/etc/apache2$ sudo cat ports.conf
+# If you just change the port or add more ports here, you will likely also
+# have to change the VirtualHost statement in
+# /etc/apache2/sites-enabled/000-default.conf
+
+Listen 9000
+
+<IfModule ssl_module>
+#       Listen 443
+</IfModule>
+
+<IfModule mod_gnutls.c>
+#       Listen 443
+</IfModule>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+
+db@db-VirtualBox:~$ sudo ss -ntlp
+
+/run/php/php8.1-fpm.sock
+
+
+6. Установить MySQL. Создать новую базу данных и таблицу в ней.
+db@db-VirtualBox:/etc/nginx$ sudo apt install mysql-server -y
+db@db-VirtualBox:/etc/nginx$ sudo mysql -u root -p
+
+mysql> create database GB_HW_7;
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| GB_HW_7            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+
+mysql> create table students(id INT, nave VARCHAR(100),tel INT);
+mysql> insert into students values (1, 'Ivanov Dmitriy', 891), (2, 'Sidorov Vasya',791), (3, 'Petrov Petya', 001);
+mysql> select * from students;
++------+---------------+------+
+| id   | nave          | tel  |
++------+---------------+------+
+|    1 | Ivanov Dmitriy|  891 |
+|    2 | Sidorov Vasya |  791 |
+|    3 | Petrov Petya  |  001 |
++------+---------------+------+
+3 rows in set (0,01 sec)
