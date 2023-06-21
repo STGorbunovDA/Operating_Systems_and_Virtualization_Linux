@@ -1,0 +1,30 @@
+HomeWork_8. Запуск веб-приложения из контейнеров
+
+1. Переустановить операционную систему (по желанию, для дополнительной практики)
+2. Установить Docker.
+3. Запустить контейнер с Ubuntu.
+4. * Используя Dockerfile, собрать связку nginx + PHP-FPM в одном контейнере.
+
+
+2. Установить Docker.
+
+db@db-VirtualBox:~$ sudo apt install docker.io -y
+[sudo] пароль для db:
+Чтение списков пакетов… Готово
+Построение дерева зависимостей… Готово
+Чтение информации о состоянии… Готово
+Уже установлен пакет docker.io самой новой версии (20.10.21-0ubuntu1~22.04.2).
+Обновлено 0 пакетов, установлено 0 новых пакетов, для удаления отмечено 0 пакетов, и 58 пакетов не обновлено.
+
+
+3. Запустить контейнер с Ubuntu.
+
+db@db-VirtualBox~$ sudo docker search ubuntu
+db@db-VirtualBox~$ sudo docker pull ubuntu
+db@db-VirtualBox~$ sudo docker images
+REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
+nginx         latest    6efc10a0510f   7 days ago      142MB
+ubuntu        latest    08d22c0ceb15   6 weeks ago     77.8MB
+hello-world   latest    feb5d9fea6a5   19 months ago   13.3kB
+db@db-VirtualBox~$ sudo docker run -it ubuntu
+root@7b9aebc97975:/# apt update
